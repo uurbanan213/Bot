@@ -19,11 +19,12 @@ ENV NIXPACKS_PATH=/opt/venv/bin:$NIXPACKS_PATH
 COPY . /app/.
 RUN --mount=type=cache,id=s/73524288-e967-452a-97ff-dabc9fd6add3-/root/cache/pip,target=/root/.cache/pip python -m venv --copies /opt/venv && . /opt/venv/bin/activate && pip install -r requirements.txt
 
+# Bagian Install Phase yang benar
+RUN python -m venv /opt/venv && \
+    . /opt/venv/bin/activate && \
+    pip install -r requirements.txt
 
-RUN printf '\nPATH=/opt/venv/bin:$PATH' >> /root/.profile
+# Bagian Start yang benar
+CMD ["python", "XHOST.py"]
 
-# start
-COPY . /app
-
-CMD ["python XHOST.py"]
 
